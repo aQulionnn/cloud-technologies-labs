@@ -10,12 +10,14 @@
     <link rel="stylesheet" href="@Assets["CloudTechnologies.Lab6.styles.css"]"/>
     <ImportMap/>
     <HeadOutlet/>
+    <RadzenTheme Theme="standard" />
 </head>
 
 <body>
-<Routes/>
+<Routes @rendermode="InteractiveServer"/>
 <ReconnectModal/>
 <script src="@Assets["_framework/blazor.web.js"]"></script>
+<script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Colors).Assembly.GetName().Version)"></script>
 </body>
 
 </html>

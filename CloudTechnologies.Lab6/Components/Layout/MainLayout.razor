@@ -1,9 +1,45 @@
 ﻿@inherits LayoutComponentBase
 
-@Body
+<RadzenComponents @rendermode="InteractiveServer" />
+<RadzenLayout style="position: relative;">
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="@(() => _sidebarExpanded = !_sidebarExpanded)" />
+            <RadzenLabel Text="Lab6" />
+        </RadzenStack>
+    </RadzenHeader>
+    <RadzenSidebar FullHeight="true" Responsive="false" @bind-Expanded="@_sidebarExpanded" style="position: absolute; z-index: 3">
+        <RadzenStack AlignItems="AlignItems.End" class="rz-p-2">
+            <RadzenButton Icon="west" Variant="Variant.Text" ButtonStyle="ButtonStyle.Secondary" Click="@(() => _sidebarExpanded = false)" />
+        </RadzenStack>
+        <RadzenPanelMenu>
+            <RadzenPanelMenuItem Text="Home" Path="/"/>
+            <RadzenPanelMenuItem Text="About" Path="/about"/>
+            <RadzenPanelMenuItem Text="Contact" Path="/contact"/>
+        </RadzenPanelMenu>
+        <div class="rz-p-4">
+            Sidebar
+        </div>
+    </RadzenSidebar>
+    <RadzenBody>
+        <div class="rz-p-4">
+            @Body
+        </div>
+    </RadzenBody>
+    @if (_sidebarExpanded)
+    {
+        <div @onclick="@(() => _sidebarExpanded = false)" class="rz-dialog-mask" style="position: absolute; z-index: 2"></div>
+    }
+</RadzenLayout>
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+
+    bool _sidebarExpanded;
+
+}

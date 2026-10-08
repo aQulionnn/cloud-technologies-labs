@@ -1,6 +1,14 @@
+using System.Globalization;
 using CloudTechnologies.Lab6.Components;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRadzenComponents();
+var culture = CultureInfo.InvariantCulture;
+
+CultureInfo.DefaultThreadCurrentCulture = culture;
+CultureInfo.DefaultThreadCurrentUICulture = culture;
 
 builder.Services
     .AddRazorComponents()
