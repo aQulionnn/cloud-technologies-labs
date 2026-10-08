@@ -1,0 +1,9 @@
+﻿services:
+  cloudtechnologies.lab6:
+    image: cloudtechnologies.lab6
+    build:
+      context: .
+      dockerfile: CloudTechnologies.Lab6/Dockerfile
+    ports:
+      - "5000:8080"
+      - "5001:8081"
