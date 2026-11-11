@@ -2,5 +2,6 @@
   <Folder Name="/Solution Items/">
     <File Path="compose.yaml" />
   </Folder>
+  <Project Path="CloudTechnologies.Lab6.Tests/CloudTechnologies.Lab6.Tests.csproj" />
   <Project Path="CloudTechnologies.Lab6/CloudTechnologies.Lab6.csproj" />
 </Solution>
