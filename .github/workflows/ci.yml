@@ -1,0 +1,47 @@
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Run tests
+        run: dotnet test --configuration Release
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/cloud-technologies-lab-6:latest -f CloudTechnologies.Lab6/Dockerfile .
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/cloud-technologies-lab-6:latest
+
+      - name: Deploy (simulation)
+        run: |
+          docker run -d --name cloud-app -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/cloud-technologies-lab-6:latest
+          sleep 5
+          docker ps --filter name=cloud-app --filter status=running
+          docker stop cloud-app
+          docker rm cloud-app
